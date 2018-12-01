@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  <!-- <h3>Top Artists</h3>
+    {% for artist in topartists %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata float-left">
+              <div><a class="mr-2" href="#">{{ artist.name }}</a></div>
+              <div><small><strong>{{ artist.listeners }}</strong> listeners worldwide</small></div>
+            </div>
+            <div class="float-right">
+              <img src="{{ artist.img }}" class="svg" fill="white" height="100" vertical-align="middle" width="100">
+            </div>
+          </div>
+        </article>
+    {% endfor %} -->
+
+    <h3 class="mt-2">Top Tracks</h3>
+    {% for track in toptracks %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata float-left">
+              <div><a class="mr-2" href="{{ track.url }}">{{ track.name }}</a></div>
+              <div><small>by <a class="mr-2" href="{{ track.artist.url }}">{{ track.artist.name }}</small></a></div>
+              <div><small>Played <strong>{{ track.playcount }}</strong> times</small></div>
+              <div><small><strong>{{ track.listeners }}</strong> listeners worldwide</small></div>
+            </div>
+            <div class="float-right">
+              <img src="{{ track.image[1]['#text'] }}" class="svg" fill="white" height="100" vertical-align="middle" width="100">
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
