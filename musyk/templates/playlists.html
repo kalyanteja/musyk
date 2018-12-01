@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3 class="mt-2">My Playlist</h3>
+    {% for track in playlists %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h4>my songs goes here...</h4>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

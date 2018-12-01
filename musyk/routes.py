@@ -23,6 +23,11 @@ def toptracks():
     return render_template('toptracks.html', toptracks=data[0]['tracks']['track'], error=error, title='Top Tracks')
 
 
+@app.route("/playlists")
+def playlists():
+    return render_template('playlists.html', title='My Playlists')
+
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
