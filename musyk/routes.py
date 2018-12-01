@@ -8,14 +8,7 @@ from musyk.lastfm import top_tracks
 @app.route("/")
 @app.route("/home")
 def home():
-    data = []
-    error = None
-    resp = top_tracks()
-    if resp:
-        data.append(resp)
-    if len(data) != 2:
-        error = 'Bad Response from Last.FM API'
-    return render_template('home.html', toptracks=data[0]['tracks']['track'], error=error)
+    return render_template('home.html')
 
 
 @app.route("/toptracks")
