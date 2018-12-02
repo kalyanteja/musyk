@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from musyk import app, db, bcrypt
 from musyk.forms import RegistrationForm, LoginForm
-from musyk.models import User, Track
+from musyk.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from musyk.lastfm import top_tracks
 from musyk.countries import all_countries
