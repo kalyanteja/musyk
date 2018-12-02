@@ -61,20 +61,35 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Hot stuff!</h3>
-            <p class='text-muted'>You can play whatever you like here.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Play your library</li>
-                <li class="list-group-item list-group-item-light">Play your mix</li>
-                <li class="list-group-item list-group-item-light">Play your recommendations</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
+              {% if current_user.is_authenticated %}
+                <h3>See in your country</h3>
+                <select name="comp_select" id="country" class="selectpicker form-control">
+                  {% for country in countries %}
+                    <option value="{{ country.name }}">{{ country.name }}</option>
+                  {% endfor %}
+                </select>
+              {% else %}
+                <h3> <a href="{{ url_for('register') }}">Sign up</a> for country level data!</h3>
+              {% endif %}
           </div>
         </div>
       </div>
     </main>
 
+    <script>
+      let country_select = document.getElementById('country');
+      if (country_select){
+          country_select.onchange = function(){
+          country = country_select.value + ',{{ current_user.username }}';
+          fetch("/country/" + country)
+        }
+        
+        const currCountry = '{{ current_user.country }}';
+        if (currCountry){
+          country_select.value = currCountry;
+        }
+      }      
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
