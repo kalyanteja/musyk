@@ -1,19 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h3 class="mt-2">My Playlist</h3>
-    {% for track in playlists %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata float-left">
-              <div><a class="mr-2" href="{{ track.url }}">{{ track.name }}</a></div>
-              <div><small>by <a class="mr-2" href="{{ track.artist.url }}">{{ track.artist.name }}</small></a></div>
-              <div><small>Played <strong>{{ track.playcount }}</strong> times</small></div>
-              <div><small><strong>{{ track.listeners }}</strong> listeners worldwide</small></div>
-            </div>
-            <div class="float-right">
-              <img src="{{ track.image[1]['#text'] }}" class="svg" fill="white" height="100" vertical-align="middle" width="100">
-            </div>
-          </div>
-        </article>
-    {% endfor %}
+    <div class="content-section">
+        <h5 class="mt-2">My Playlist</h5>
+        <ul mt-2>
+            {% for track in tracks %}
+                <li><a class="mr-2" href="#">{{ track.name }}</a> <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock content %}

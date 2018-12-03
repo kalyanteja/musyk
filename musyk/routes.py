@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from musyk import app, db, bcrypt
 from musyk.forms import RegistrationForm, LoginForm
-from musyk.models import User
+from musyk.models import User, Track
 from flask_login import login_user, current_user, logout_user, login_required
 from musyk.lastfm import top_tracks
 from musyk.countries import all_countries
@@ -31,12 +31,16 @@ def toptracks():
         toptracks.append(resp)
     if len(toptracks) != 2:
         error = 'Bad Response from Last.FM API'
-    return render_template('toptracks.html',countries=allcountries, toptracks=toptracks[0]['tracks']['track'], error=error, title='Top Tracks')
+    return render_template('toptracks.html', countries=allcountries, toptracks=toptracks[0]['tracks']['track'], error=error, title='Top Tracks')
 
 
 @app.route("/playlists")
+@login_required
 def playlists():
-    return render_template('playlists.html', countries=allcountries, title='My Playlists')
+    if current_user and current_user.is_authenticated:
+        tracks = Track.query.filter_by(user_id=current_user.id)
+        return render_template('playlists.html', countries=allcountries, title='My Playlists', tracks=tracks)
+    return redirect(url_for('home'))
 
 
 @app.route('/country/<countryName>')
@@ -48,8 +52,22 @@ def country(countryName):
     if user:
         user.country = country
         db.session.commit()
-    return redirect(url_for('home'))
+    return render_template('home.html', countries=allcountries)
 
+@app.route("/add_to_playlist", methods=['GET', 'POST'])
+def addtoplaylist():
+    user_id = request.args.get('user_id')
+    track_name = request.args.get('name')
+    track_artist = request.args.get('artist')
+    existing_track = Track.query.filter_by(name=track_name, artist=track_artist, user_id=user_id).first()
+    if existing_track:
+        flash('Track already in your playlist', 'danger')
+    else:
+        track = Track(name=track_name, artist=track_artist, user_id=user_id)
+        db.session.add(track)
+        db.session.commit()
+        flash('Track added to your playlist', 'success')
+    return ''
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -64,10 +82,6 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
-
-
-# @app.route("/addtoplaylist", methods=['GET', 'POST'])
-# def addtoplaylist():
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -95,4 +109,4 @@ def logout():
 @app.route("/account")
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    return render_template('account.html', title='Account', countries=allcountries)
