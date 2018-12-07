@@ -54,6 +54,18 @@ def country(countryName):
         db.session.commit()
     return render_template('home.html', countries=allcountries)
 
+@app.route('/deleteTrack/<trackId>')
+def deleteTrack(trackId):
+    existing_track = Track.query.filter_by(id=trackId).first()
+    print(existing_track)
+    if existing_track:
+        db.session.delete(existing_track)
+        db.session.commit()
+        flash('Track removed from your playlist', 'warning')
+    else:
+        flash('Track not in your playlist', 'danger')
+    return redirect(url_for('home'))
+
 @app.route("/add_to_playlist", methods=['GET', 'POST'])
 def addtoplaylist():
     user_id = request.args.get('user_id')

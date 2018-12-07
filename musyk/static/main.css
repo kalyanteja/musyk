@@ -128,3 +128,11 @@ a.article-title:hover {
   display: flex;
   /* flex-direction: column-reverse; */
 }
+
+.track-region {
+  color: orangered;
+}
+
+.point-thing {
+  cursor: pointer;
+}

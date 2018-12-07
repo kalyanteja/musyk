@@ -1,11 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-        <h5 class="mt-2">My Playlist</h5>
-        <ul mt-2>
-            {% for track in tracks %}
-                <li><a class="mr-2" href="#">{{ track.name }}</a> <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a></li>
-            {% endfor %}
-        </ul>
+        <h5 class="mt-2">My <span class="fantasy-font"> Musyk</span>  playlist</h5>
+        <table class="mt-4 table table-borderless">
+            <tbody>
+                {% for track in tracks %}
+                    <tr>
+                        <td colspan="8"><a class="mr-2" href="#">{{ track.name }}</a>
+                            <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a>
+                        </td>
+                        <td colspan="2">
+                           <img src="{{ url_for('static', filename='delete-track.svg')}}"
+                                title="Remove from playlist"
+                                class="point-thing"
+                                onclick="delete_track('{{ track.id }}')"></img>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    <script>
+        function delete_track(track_id){
+            const fullUrl = '/deleteTrack/' + track_id;
+            fetch(fullUrl);
+        } 
+    </script>
 {% endblock content %}
