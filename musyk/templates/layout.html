@@ -48,7 +48,7 @@
     </header>
     <main role="main" class="container">
       <div class="flex-column-rev">
-        <div class="col-md-8">
+        <div class="w-75 mr-2">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -60,19 +60,21 @@
           {% endwith %}
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-              {% if current_user.is_authenticated %}
-                <h5>Check your region</h5>
+        <div class="w-25">
+          {% if current_user.is_authenticated %}
+            <div class="content-section">
+                <h5>Your region</h5>
                 <select name="comp_select" id="country" class="selectpicker form-control">
                   {% for country in countries %}
                     <option value="{{ country.name }}">{{ country.name }}</option>
                   {% endfor %}
                 </select>
-              {% else %}
-                <h3> <a href="{{ url_for('register') }}">Sign up</a> for country trends</h3>
-              {% endif %}
-          </div>
+            </div>
+          {% else %}
+            <div class="content-section">
+                <h4> <a href="{{ url_for('register') }}">Sign up</a> for country trends</h4>
+            </div>
+          {% endif %}
         </div>
       </div>
     </main>

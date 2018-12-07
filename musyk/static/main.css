@@ -86,6 +86,7 @@ a.article-title:hover {
   transition: .5s ease;
   backface-visibility: hidden;
   cursor: pointer;
+  background: url(../static/add-to-playlist.png) no-repeat;
 }
 
 .middle {
