@@ -69,8 +69,8 @@ a.article-title:hover {
 }
 
 .account-img {
-  height: 125px;
-  width: 125px;
+  height: 105px;
+  width: 105px;
   margin-right: 20px;
   margin-bottom: 16px;
 }
@@ -85,6 +85,7 @@ a.article-title:hover {
   height: auto;
   transition: .5s ease;
   backface-visibility: hidden;
+  cursor: pointer;
 }
 
 .middle {
@@ -100,10 +101,6 @@ a.article-title:hover {
 
 .artist-img:hover .artist-image {
   opacity: 0.3;
-}
-
-.artist-img:hover .middle {
-  opacity: 1;
 }
 
 .artist-image-text {
@@ -124,4 +121,9 @@ a.article-title:hover {
 
 .larger-txt {
   font-size: larger;
+}
+
+.flex-column-rev {
+  display: flex;
+  /* flex-direction: column-reverse; */
 }

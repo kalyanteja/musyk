@@ -2,7 +2,7 @@
 {% block content %}
   <div class="content-section">
       <div class="row-fluid">
-        <div class="col-5"><h3 class="mt-2">Top Tracks</h3></div>
+        <div><h3>Top Tracks</h3></div>
       </div>
       <div class="mt-4">
           {% for track in toptracks %}
@@ -15,7 +15,10 @@
                     <div><small><strong>{{ track.listeners }}</strong> listeners worldwide</small></div>
                   </div>
                   <div class="float-right">
-                    <img onclick="add_to_playlist('{{ track.name }}', '{{ track.artist.name }}')" src="{{ track.image[1]['#text'] }}" class="svg artist-image" fill="white" height="100" vertical-align="middle" width="100">
+                    <img onclick="add_to_playlist('{{ track.name }}', '{{ track.artist.name }}')"
+                      title="Add to your playlist"
+                      src="{{ track.image[1]['#text'] }}" class="svg artist-image" fill="white" height="100"
+                      vertical-align="middle" width="100">
                   </div>
                 </div>
               </article>
