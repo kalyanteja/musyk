@@ -112,3 +112,16 @@ a.article-title:hover {
   font-size: 16px;
   padding: 16px 32px;
 }
+
+.musyk-logo {
+  height: 30px;
+  width: 50px;
+}
+
+.fantasy-font {
+  font-family: fantasy;
+}
+
+.larger-txt {
+  font-size: larger;
+}

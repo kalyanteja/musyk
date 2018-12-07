@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='musyk-me-ico.ico') }}"/>
     {% if title %}
         <title>Musyk - {{ title }}</title>
     {% else %}
@@ -19,8 +19,9 @@
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="/">Musyk</a>
+        <div class="container fantasy-font">
+          <img class="musyk-logo" src="{{ url_for('static', filename='musyk-me-logo.jpg') }}" alt="Musyk">
+          <a class="navbar-brand mr-4 larger-txt" href="/">Musyk</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
