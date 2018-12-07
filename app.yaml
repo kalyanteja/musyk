@@ -1,9 +1,6 @@
-runtime: python3
+runtime: python37
 
 api_version: 1
-
-runtime_config:
-    python_version: 3
 
 # [START handlers]
 
