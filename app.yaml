@@ -4,11 +4,11 @@ runtime: python37
 
 handlers:
 
-- url: /static
+- url: /musyk/static
 
-  static_dir: static
+  static_dir: musyk/static
 
-- url: auto
+- url: /musyk/.*
 
   script: main.app
 
