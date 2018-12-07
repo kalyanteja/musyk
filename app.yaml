@@ -5,9 +5,8 @@ entrypoint: gunicorn -b :$PORT main:app
 
 handlers:
 
-- url: /static
-
-  static_dir: /static
+- url: /musyk/static
+  static_dir: static
 
 - url: /.*
   script: auto
