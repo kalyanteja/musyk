@@ -8,7 +8,7 @@ handlers:
 
   static_dir: static
 
-- url: /.*
+- url: auto
 
   script: main.app
 
