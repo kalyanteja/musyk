@@ -129,8 +129,12 @@ a.article-title:hover {
   /* flex-direction: column-reverse; */
 }
 
-.track-region {
+.track-region-country {
   color: orangered;
+}
+
+.track-region-world {
+  color: cornflowerblue;
 }
 
 .point-thing {

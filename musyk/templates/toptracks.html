@@ -2,7 +2,9 @@
 {% block content %}
   <div class="content-section">
       <div class="row-fluid">
-        <div><h4>Top Tracks {% if current_user.is_authenticated %} in <span class="track-region">{{ current_user.country }}</span> {% else %} across the globe {% endif %}</h4></div>
+        <div><h4>Top tracks {% if current_user.is_authenticated %}
+             in <span class="track-region-country">{{ current_user.country }}</span>
+             {% else %} <span class="track-region-world"> across the globe</span> {% endif %}</h4></div>
       </div>
       <div class="mt-4">
           {% for track in toptracks %}
