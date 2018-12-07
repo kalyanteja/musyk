@@ -1,4 +1,4 @@
-runtime: python
+runtime: python3
 
 api_version: 1
 
