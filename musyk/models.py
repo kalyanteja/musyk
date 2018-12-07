@@ -17,8 +17,8 @@ class User(db.Model, UserMixin):
     country = db.Column(db.Text, nullable=False, default='Worldwide')
     tracks = db.relationship('Track', backref='listener', lazy=True)
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.country}')"
+    # def __repr__(self):
+    #     return f"User('{self.username}', '{self.email}', '{self.country}')"
 
 
 class Track(db.Model):
@@ -31,12 +31,12 @@ class Track(db.Model):
     image_url = db.Column(db.Text, nullable=False, default='https://lastfm-img2.akamaized.net/i/u/174s/4128a6eb29f94943c9d206c08e625904')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __repr__(self):
-        return f"Track('{self.name}', '{self.artist}', '{self.date_posted}')"
+    # def __repr__(self):
+    #     return f"Track('{self.name}', '{self.artist}', '{self.date_posted}')"
 
 
-def init_db():
-    db.create_all()
+# def init_db():
+#     db.create_all()
 
-if __name__ == '__main__':
-    init_db()
+# if __name__ == '__main__':
+#     init_db()
