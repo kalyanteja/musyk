@@ -10,6 +10,8 @@
           {% for track in toptracks %}
               <article class="media content-section">
                 <div class="media-body artist-img">
+                  <div name="successAlert" id="successAlert_{{ loop.index }}" class="alert alert-success" role="alert" style="display:none;"></div>
+                  <div name="errorAlert" id="errorAlert_{{ loop.index }}" class="alert alert-danger" role="alert" style="display:none;"></div>
                   <div class="article-metadata float-left">
                     <div><a class="mr-2" href="{{ track.url }}">{{ track.name }}</a></div>
                     <div><small>by <a class="mr-2" href="{{ track.artist.url }}">{{ track.artist.name }}</small></a></div>
@@ -17,7 +19,7 @@
                     <div><small><strong>{{ track.listeners }}</strong> listeners worldwide</small></div>
                   </div>
                   <div class="float-right">
-                    <img onclick="add_to_playlist('{{ track.name }}', '{{ track.artist.name }}')"
+                    <img onclick="add_to_playlist('{{ loop.index }}', '{{ track.name }}', '{{ track.artist.name }}')"
                       title="Add to your playlist"
                       src="{{ track.image[1]['#text'] }}" class="svg artist-image" fill="white" height="100"
                       vertical-align="middle" width="100">
@@ -27,11 +29,27 @@
           {% endfor %}
       </div>
       <script>
-        function add_to_playlist(track_name, artist){
-          const reqParams = `?name=${track_name}&artist=${artist}&user_id=${'{{ current_user.id }}'}`
-          const fullUrl = '/add_to_playlist' + reqParams;
-          fetch(fullUrl);
-        } 
+        function add_to_playlist(index, track_name, artist){
+          $.ajax({
+              data : {
+                  name : track_name,
+                  artist : artist,
+                  user_id : '{{ current_user.id }}'
+              },
+              type : 'POST',
+              url : '/add_to_playlist'
+          })
+          .done(function(data) {
+            $('div[name=successAlert]').hide();
+            $('div[name=errorAlert]').hide();
+            if (data.error) {
+              $(`#errorAlert_${index}`).text(data.error).show();
+            }
+            else {
+              $(`#successAlert_${index}`).text(data.success).show();
+            }
+          });
+        }
       </script>
   </div>
     

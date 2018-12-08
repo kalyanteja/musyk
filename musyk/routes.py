@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from musyk import app, db, bcrypt
 from musyk.forms import RegistrationForm, LoginForm
 from musyk.models import User, Track
@@ -61,25 +61,23 @@ def deleteTrack(trackId):
     if existing_track:
         db.session.delete(existing_track)
         db.session.commit()
-        flash('Track removed from your playlist', 'warning')
-    else:
-        flash('Track not in your playlist', 'danger')
-    return redirect(url_for('home'))
+        return jsonify({'success' : 'Track removed from your playlist'})
+    return jsonify({'error' : 'Some issue getting rid of this track'})
 
-@app.route("/add_to_playlist", methods=['GET', 'POST'])
+@app.route("/add_to_playlist", methods=['POST'])
 def addtoplaylist():
-    user_id = request.args.get('user_id')
-    track_name = request.args.get('name')
-    track_artist = request.args.get('artist')
+    user_id = request.form['user_id']
+    track_name = request.form['name']
+    track_artist = request.form['artist']
+    print(user_id + track_name + track_artist)
     existing_track = Track.query.filter_by(name=track_name, artist=track_artist, user_id=user_id).first()
     if existing_track:
-        flash('Track already in your playlist', 'danger')
+        return jsonify({'error' : 'Track already in your playlist'})
     else:
         track = Track(name=track_name, artist=track_artist, user_id=user_id)
         db.session.add(track)
         db.session.commit()
-        flash('Track added to your playlist', 'success')
-    return ''
+    return jsonify({'success' : 'Track added to your playlist'})
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
