@@ -5,41 +5,24 @@
 
         <div name="successAlert" id="successAlert" class="mt-4 alert alert-warning" role="alert" style="display:none;"></div>
         <div name="errorAlert" id="errorAlert" class="mt-4 alert alert-danger" role="alert" style="display:none;"></div>
-        <table class="mt-4 table table-borderless">
-            <tbody>
-                {% for track in tracks %}
-                    <tr>
-                        <td colspan="8"><a class="mr-2" href="#">{{ track.name }}</a>
-                            <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a>
-                        </td>
-                        <td colspan="2">
-                           <img src="{{ url_for('static', filename='delete-track.svg')}}"
-                                title="Remove from playlist"
-                                class="point-thing"
-                                onclick="delete_track('{{ track.id }}')"></img>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div id="place_for_updated_playlist">
+            <table class="mt-4 table table-borderless">
+                <tbody>
+                    {% for track in tracks %}
+                        <tr>
+                            <td colspan="8"><a class="mr-2" href="#">{{ track.name }}</a>
+                                <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a>
+                            </td>
+                            <td colspan="2">
+                                <img src="{{ url_for('static', filename='delete-track.svg')}}"
+                                    title="Remove from playlist"
+                                    class="point-thing"
+                                    onclick="delete_track('{{ track.id }}')"></img>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script>
-        function delete_track(track_id){
-          $.ajax({
-              data : { trackId : track_id },
-              type : 'POST',
-              url : '/deleteTrack'
-          })
-          .done(function(data) {
-            if (data.error) {
-                $(`#successAlert`).hide();
-                $(`#errorAlert`).text(data.error).show();
-            }
-            else {
-                $(`#errorAlert`).hide();
-                $(`#successAlert`).text(data.success).show();
-            }
-          });
-        }
-    </script>
 {% endblock content %}

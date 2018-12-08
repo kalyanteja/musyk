@@ -1,0 +1,22 @@
+{% block playlists_section %}
+<div id="place_for_updated_playlist">
+    <table class="mt-4 table table-borderless">
+        <tbody>
+            {% for track in tracks %}
+                <tr>
+                    <td colspan="8"><a class="mr-2" href="#">{{ track.name }}</a>
+                        <small>by <a class="mr-2" href="#">{{ track.artist }}</small></a>
+                    </td>
+                    <td colspan="2">
+                        <img src="{{ url_for('static', filename='delete-track.svg')}}"
+                            title="Remove from playlist"
+                            class="point-thing"
+                            onclick="delete_track('{{ track.id }}')"></img>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock playlists_section %}

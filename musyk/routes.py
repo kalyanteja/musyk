@@ -34,13 +34,13 @@ def toptracks():
     return render_template('toptracks.html', countries=allcountries, toptracks=toptracks[0]['tracks']['track'], error=error, title='Top Tracks')
 
 
-@app.route("/playlists")
-@login_required
-def playlists():
-    if current_user and current_user.is_authenticated:
-        tracks = Track.query.filter_by(user_id=current_user.id)
-        return render_template('playlists.html', countries=allcountries, title='My Playlists', tracks=tracks)
-    return redirect(url_for('home'))
+# @app.route("/playlists")
+# @login_required
+# def playlists():
+#     if current_user and current_user.is_authenticated:
+#         tracks = Track.query.filter_by(user_id=current_user.id)
+#         return render_template('playlists.html', countries=allcountries, title='My Playlists', tracks=tracks)
+#     return redirect(url_for('home'))
 
 
 @app.route('/country/<countryName>')
@@ -54,16 +54,25 @@ def country(countryName):
         db.session.commit()
     return render_template('home.html', countries=allcountries)
 
-@app.route('/deleteTrack', methods=['POST'])
-def deleteTrack():
-    trackId = request.form['trackId']
-    existing_track = Track.query.filter_by(id=trackId).first()
-    print(existing_track)
-    if existing_track:
-        db.session.delete(existing_track)
-        db.session.commit()
-        return jsonify({'success' : 'Track removed from your playlist'})
-    return jsonify({'error' : 'Oops! Issue getting rid of this track from your playlist'})
+@app.route('/playlists', methods=['POST', 'GET'])
+def playlists():
+    if current_user and current_user.is_authenticated:
+        if request.method == 'POST':
+            trackId = request.form['trackId']
+            existing_track = Track.query.filter_by(id=trackId).first()
+            if existing_track:
+                db.session.delete(existing_track)
+                db.session.commit()
+                updatedTracks = Track.query.filter_by(user_id=current_user.id)
+                print('updatedTracks')
+                return render_template('updatedPlaylist.html', tracks=updatedTracks)
+            else:
+                print('updatedTracks after no existing track')
+                jsonify({'error' : 'Oops! Issue getting rid of this track from your playlist'})
+        else:
+            tracks = Track.query.filter_by(user_id=current_user.id).all()
+            return render_template('playlists.html', countries=allcountries, title='My Playlists', tracks=tracks)
+    return jsonify({'error' : 'Oops! Error getting your playlists'})
 
 @app.route("/add_to_playlist", methods=['POST'])
 def addtoplaylist():

@@ -91,7 +91,24 @@
         if (currCountry){
           country_select.value = currCountry;
         }
-      }      
+      }
+
+      function delete_track(track_id){
+          $.ajax({
+              data : { trackId : track_id },
+              type : 'POST',
+              url : '/playlists',
+              success: function(response) {
+                  $("#place_for_updated_playlist").html(response);
+                  $(`#errorAlert`).hide();
+                  $(`#successAlert`).text("Track removed from playlist").show();
+              },
+              error: function(xhr) {
+                  $(`#successAlert`).hide();
+                  $(`#errorAlert`).text("Oops! some error.").show();
+              }
+          });
+        }
     </script>
 
     <!-- Optional JavaScript -->
