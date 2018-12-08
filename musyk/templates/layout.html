@@ -64,7 +64,7 @@
           {% if current_user.is_authenticated %}
             <div class="content-section">
                 <h5>Your region</h5>
-                <select name="comp_select" id="country" class="selectpicker form-control">
+                <select name="comp_select" id="countrySelection" class="selectpicker form-control">
                   {% for country in countries %}
                     <option value="{{ country.name }}">{{ country.name }}</option>
                   {% endfor %}
@@ -80,11 +80,27 @@
     </main>
 
     <script>
-      let country_select = document.getElementById('country');
+      let country_select = document.getElementById('countrySelection');
+
       if (country_select){
           country_select.onchange = function(){
-          country = country_select.value + ',{{ current_user.username }}';
-          fetch("/country/" + country)
+            $.ajax({
+              data : {
+                  country : country_select.value,
+                  user_id : '{{ current_user.id }}'
+              },
+              type : 'POST',
+              url : '/country'
+            })
+            .done(function(data) {
+              if (data.error) {
+                console.log(data.error)
+              }
+              else {
+                // reload a page to refresh country related data
+                location.reload();
+              }
+            });
         }
         
         const currCountry = '{{ current_user.country }}';

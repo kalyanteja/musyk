@@ -43,16 +43,16 @@ def toptracks():
 #     return redirect(url_for('home'))
 
 
-@app.route('/country/<countryName>')
-def country(countryName):
-    # todo, can't use split like this
-    userName = countryName.split(',')[1]
-    country = countryName.split(',')[0]
-    user = User.query.filter_by(username=userName).first()
+@app.route('/country', methods=['POST'])
+def country():
+    userId = request.form['user_id']
+    country = request.form['country']
+    user = User.query.filter_by(id=userId).first()
+    print(userId + country)
     if user:
         user.country = country
         db.session.commit()
-    return render_template('home.html', countries=allcountries)
+    return jsonify({'success' : 'Yay, your region is now changed'})
 
 @app.route('/playlists', methods=['POST', 'GET'])
 def playlists():
@@ -64,10 +64,8 @@ def playlists():
                 db.session.delete(existing_track)
                 db.session.commit()
                 updatedTracks = Track.query.filter_by(user_id=current_user.id)
-                print('updatedTracks')
                 return render_template('updatedPlaylist.html', tracks=updatedTracks)
             else:
-                print('updatedTracks after no existing track')
                 jsonify({'error' : 'Oops! Issue getting rid of this track from your playlist'})
         else:
             tracks = Track.query.filter_by(user_id=current_user.id).all()
