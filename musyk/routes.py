@@ -77,6 +77,10 @@ def addtoplaylist():
     user_id = request.form['user_id']
     track_name = request.form['name']
     track_artist = request.form['artist']
+    print("user...#####")
+    print(user_id)
+    if user_id == None or user_id == "":
+        return jsonify({'error' : 'Please Sign In to add tracks to your playlists'})
     existing_track = Track.query.filter_by(name=track_name, artist=track_artist, user_id=user_id).first()
     if existing_track:
         return jsonify({'error' : 'Track already in your playlist'})
