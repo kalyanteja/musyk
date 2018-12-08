@@ -86,7 +86,7 @@ a.article-title:hover {
   transition: .5s ease;
   backface-visibility: hidden;
   cursor: pointer;
-  background: url(../static/add-to-playlist.png) no-repeat;
+  //background: url(../static/add-to-playlist.png) no-repeat;
 }
 
 .middle {
@@ -114,6 +114,7 @@ a.article-title:hover {
 .musyk-logo {
   height: 30px;
   width: 50px;
+  cursor: pointer;
 }
 
 .fantasy-font {
@@ -126,7 +127,6 @@ a.article-title:hover {
 
 .flex-column-rev {
   display: flex;
-  /* flex-direction: column-reverse; */
 }
 
 .track-region-country {
@@ -139,4 +139,30 @@ a.article-title:hover {
 
 .point-thing {
   cursor: pointer;
+}
+
+@media only screen and (min-width:580px){
+  .sidenav-width {
+    width: 25%;
+  }
+  
+  .content-width {
+    width: 75%;
+    margin-right: 4px;
+  }
+
+  .artist-image-div {
+    float: right;
+  }
+}
+
+
+@media only screen and (max-width:580px){
+  .flex-column-rev {
+    flex-direction: column-reverse;
+  }
+  
+  .account-section{
+    flex-direction: column;
+  }
 }
