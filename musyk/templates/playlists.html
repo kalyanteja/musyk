@@ -2,6 +2,9 @@
 {% block content %}
     <div class="content-section">
         <h5 class="mt-2">My <span class="fantasy-font"> Musyk</span>  playlist</h5>
+
+        <div name="successAlert" id="successAlert" class="mt-4 alert alert-warning" role="alert" style="display:none;"></div>
+        <div name="errorAlert" id="errorAlert" class="mt-4 alert alert-danger" role="alert" style="display:none;"></div>
         <table class="mt-4 table table-borderless">
             <tbody>
                 {% for track in tracks %}
@@ -22,8 +25,21 @@
     </div>
     <script>
         function delete_track(track_id){
-            const fullUrl = '/deleteTrack/' + track_id;
-            fetch(fullUrl);
+          $.ajax({
+              data : { trackId : track_id },
+              type : 'POST',
+              url : '/deleteTrack'
+          })
+          .done(function(data) {
+            if (data.error) {
+                $(`#successAlert`).hide();
+                $(`#errorAlert`).text(data.error).show();
+            }
+            else {
+                $(`#errorAlert`).hide();
+                $(`#successAlert`).text(data.success).show();
+            }
+          });
         }
     </script>
 {% endblock content %}

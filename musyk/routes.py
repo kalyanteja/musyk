@@ -54,22 +54,22 @@ def country(countryName):
         db.session.commit()
     return render_template('home.html', countries=allcountries)
 
-@app.route('/deleteTrack/<trackId>')
-def deleteTrack(trackId):
+@app.route('/deleteTrack', methods=['POST'])
+def deleteTrack():
+    trackId = request.form['trackId']
     existing_track = Track.query.filter_by(id=trackId).first()
     print(existing_track)
     if existing_track:
         db.session.delete(existing_track)
         db.session.commit()
         return jsonify({'success' : 'Track removed from your playlist'})
-    return jsonify({'error' : 'Some issue getting rid of this track'})
+    return jsonify({'error' : 'Oops! Issue getting rid of this track from your playlist'})
 
 @app.route("/add_to_playlist", methods=['POST'])
 def addtoplaylist():
     user_id = request.form['user_id']
     track_name = request.form['name']
     track_artist = request.form['artist']
-    print(user_id + track_name + track_artist)
     existing_track = Track.query.filter_by(name=track_name, artist=track_artist, user_id=user_id).first()
     if existing_track:
         return jsonify({'error' : 'Track already in your playlist'})
